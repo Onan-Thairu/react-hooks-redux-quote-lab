@@ -41,12 +41,22 @@ export default function quotesReducer(state = initialState, action) {
       return state.filter((quote) => quote.id !== action.payload)
 
     case "quotes/upvote":
-      const newState = state.map((quote) => {
+      const upState = state.map((quote) => {
         if (quote.id === action.payload) {
           return {...quote, votes: quote.votes + 1 }
         }
       })
-      return newState
+      return upState
+
+    case "quotes/downvote":
+      const downState = state.map((quote) => {
+        if (quote.id === action.payload && quote.votes > 0) {
+          return {...quote, votes: quote.votes - 1}
+        } else {
+          return quote
+        }
+      })
+      return downState
 
   }
   return state;
